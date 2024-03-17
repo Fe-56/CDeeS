@@ -30,6 +30,9 @@
 
 - notebooks
 ---- deam
+-------- neural_networks
+------------ feed_forward
+------------ cnn
 ---- pmemo
 ---- sample_code.ipynb
 
