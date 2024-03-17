@@ -11,6 +11,9 @@
 -------- MEMD_audio
 -------- metadata
 -------- processed
+------------ annotations
+------------ features
+---------------- integrated
 ---- PMEmo
 -------- PMEmo2019
 ------------ annotations
