@@ -1,15 +1,14 @@
 import pandas as pd
 import numpy as np
+from essentia_best_features import *
+from sklearn.preprocessing import MinMaxScaler
 
 def process_song(df_essentia_features):
     df_essentia_features = df_essentia_features[df_essentia_features.columns[1:]]
     df_essentia_features = get_mean_features(df_essentia_features)
     metadata_columns = [col for col in df_essentia_features.columns if 'metadata' in col]
     df_essentia_features = df_essentia_features.drop(columns=metadata_columns)
-
-    pd.set_option('display.max_columns', None)
     df_essentia_features.select_dtypes(exclude=['int64', 'float64'])
-    pd.reset_option('display.max_columns')
 
     string_columns = ['tonal.chords_key',
                     'tonal.chords_scale',
@@ -25,8 +24,7 @@ def process_song(df_essentia_features):
     ndarray_columns = df_essentia_features_ndarray_columns.columns.difference(string_columns)
     df_essentia_features_ndarray_columns = df_essentia_features_ndarray_columns[ndarray_columns]
 
-    df_essentia_features_ndarray_columns = df_essentia_features_ndarray_columns.applymap(string_to_ndarray)
-    pd.reset_option('display.max_columns')
+    # df_essentia_features_ndarray_columns = df_essentia_features_ndarray_columns.applymap(string_to_ndarray)
 
     ndarray_columns = df_essentia_features_ndarray_columns.columns.to_list()
     df_ndarray_columns = []
@@ -44,10 +42,18 @@ def process_song(df_essentia_features):
 
     df_essentia_features_numerical_columns = df_essentia_features.select_dtypes(include=['int64', 'float64'])
 
-    df_temp = pd.merge(df_essentia_features_numerical_columns, df_essentia_features_ndarray_columns, how='inner', on='song_id')
-    df_essentia_features_flattened = pd.merge(df_temp, df_essentia_features_string_columns, how='inner', on='song_id')
+    df_temp = pd.concat([df_essentia_features_numerical_columns, df_essentia_features_ndarray_columns], axis=1)
+    df_essentia_features_flattened = pd.concat([df_temp, df_essentia_features_string_columns], axis=1)
 
-    return df_essentia_features_flattened
+    # since our best model is trained on the Essentia Best Valence Normalised featureset
+    valence_columns = [col for col in df_essentia_features_flattened.columns if any(substring in col for substring in deam_essentia_valence_features)]
+    df_essentia_best_valence_features = df_essentia_features_flattened[valence_columns]
+    
+    # normalisation
+    scaler = MinMaxScaler()
+    df_essentia_best_valence_features_normalised = pd.DataFrame(scaler.fit_transform(df_essentia_best_valence_features), columns=df_essentia_best_valence_features.columns)
+
+    return df_essentia_best_valence_features_normalised
 
     
 
@@ -65,7 +71,6 @@ def string_to_ndarray(str):
                         )
 
 def flatten_column(df, col):
-    print(col)
     result_dict = {}
     num_of_new_cols = max([len(i) for i in df[col]])
     # num_of_new_cols = len(df[col][0])
@@ -79,12 +84,12 @@ def flatten_column(df, col):
         for j in range(num_of_new_cols):
             result_col_name = f'{col}_{j}'
 
-        # do padding
-        if j >= len(df[col][i]):
-            value = 0
-        else:
-            value = df[col][i][j]
+            # do padding
+            if j >= len(df[col][i]):
+                value = 0
+            else:
+                value = df[col][i][j]
         
-        result_dict[result_col_name].append(value)
+            result_dict[result_col_name].append(value)
 
     return pd.DataFrame(result_dict)

@@ -14,14 +14,7 @@ def extract_features(file):
 
     # Create a dictionary with feature names and values
     features_dict = {name: value for name, value in zip(feature_names, feature_values)}
-
-    feature_names = features.descriptorNames()[:-4]
-    feature_values = [features[name] for name in feature_names]
-
-    # Create a dictionary with feature names and values
-    features_dict = {name: value for name, value in zip(feature_names, feature_values)}
-    df_essentia_all_sample = pd.json_normalize(features_dict)
-
-    processed = process_song(df_essentia_all_sample)
+    df_essential_all = pd.json_normalize(features_dict)
+    processed = process_song(df_essential_all)
 
     return processed

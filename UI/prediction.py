@@ -1,23 +1,29 @@
 import torch
-import pd
+import pandas as pd
+from model import NeuralNetwork
 
-def predict(data):
-    model_path = '../models/deam_feedforward_nn_essentia_best_overall_opensmile_gemaps_normalised.pt'
-    model = torch.load(model_path)
-    
-    # load the feature set
-    features = pd.read_csv(data)
-    # drop Unnamed:0 column
-    features = features[features.columns[1:]]
-    features = features.drop('song_id', axis=1)
+def predict(features):
+    # set the seed
+    seed = 42
+    torch.manual_seed(seed)
+
     features_tensor = torch.tensor(features.values, dtype=torch.float64)
 
-    input_test_data = features_tensor.float()
+    # load the model
+    model_path = './UI/deam_feedforward_nn_essentia_best_valence_mean_normalised.pt'
+    model = NeuralNetwork(features_tensor.shape[1])
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+
+    features = features_tensor.float()
 
     with torch.no_grad():
-        test_pred = model(input_test_data)
+        pred = model(features)
 
     # Separate the output into valence and arousal
-    valence_pred = test_pred[0]
-    arousal_pred = test_pred[1]
+    valence_pred = pred[:, 0]
+    arousal_pred = pred[:, 1]
+
+    print(f'Predicted valence: {valence_pred}')
+    print(f'Predicted arousal: {arousal_pred}')
     return valence_pred, arousal_pred
