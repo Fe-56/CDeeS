@@ -23,7 +23,4 @@ def predict(features):
     # Separate the output into valence and arousal
     valence_pred = pred[:, 0]
     arousal_pred = pred[:, 1]
-
-    print(f'Predicted valence: {valence_pred}')
-    print(f'Predicted arousal: {arousal_pred}')
     return valence_pred, arousal_pred

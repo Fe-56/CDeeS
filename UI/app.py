@@ -3,6 +3,7 @@ from extraction import extract_features
 from prediction import predict
 import tempfile
 import os
+import math
 
 uploaded_audio = st.file_uploader("Choose an audio file", type=['mp3', 'wav'])
 
@@ -17,4 +18,9 @@ if uploaded_audio:
 if st.button("Recommend me music"):
     features = extract_features(uploaded_audio_path)
     valence, arousal = predict(features)
-    print(valence, arousal)
+
+    rounded_valence = round(valence.item(), 4)
+    rounded_arousal = round(arousal.item(), 4)
+
+    st.write(f"Valence: {rounded_valence}")
+    st.write(f"Arousal: {rounded_arousal}")
