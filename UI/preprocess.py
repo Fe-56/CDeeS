@@ -24,15 +24,12 @@ def process_song(df_essentia_features):
     ndarray_columns = df_essentia_features_ndarray_columns.columns.difference(string_columns)
     df_essentia_features_ndarray_columns = df_essentia_features_ndarray_columns[ndarray_columns]
 
-    # df_essentia_features_ndarray_columns = df_essentia_features_ndarray_columns.applymap(string_to_ndarray)
-
     ndarray_columns = df_essentia_features_ndarray_columns.columns.to_list()
     df_ndarray_columns = []
 
     for column in ndarray_columns:
         df_ndarray_column = flatten_column(df_essentia_features_ndarray_columns, column)
         df_ndarray_columns.append(df_ndarray_column)
-
 
     df_essentia_features_ndarray_columns = pd.concat(df_ndarray_columns, axis=1)
     
@@ -46,7 +43,6 @@ def process_song(df_essentia_features):
 
     df_temp = pd.concat([df_essentia_features_numerical_columns, df_essentia_features_ndarray_columns], axis=1)
     df_essentia_features_flattened = pd.concat([df_temp, df_essentia_features_string_columns], axis=1)
-
 
     # since our best model is trained on the Essentia Best Valence Normalised featureset
     valence_columns = [col for col in df_essentia_features_flattened.columns if any(substring in col for substring in deam_essentia_valence_features)]
