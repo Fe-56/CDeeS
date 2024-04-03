@@ -97,9 +97,6 @@ def flatten_column(df, col):
 def get_normalisation_scaler():
     df_best_model_trained_features = pd.read_csv('./UI/essentia_best_valence_features.csv')
     
-    # drop Unnamed:0 column
-    df_best_model_trained_features = df_best_model_trained_features[df_best_model_trained_features.columns[1:]]
-
     df_best_model_trained_features = df_best_model_trained_features.drop('song_id', axis=1)
     scaler = MinMaxScaler()
     scaler.fit(df_best_model_trained_features)
