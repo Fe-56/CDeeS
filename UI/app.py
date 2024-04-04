@@ -1,5 +1,5 @@
 import streamlit as st
-from extraction import extract_features
+from extraction_opensmile import extract_features
 from prediction import predict
 import tempfile
 import os

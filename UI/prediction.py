@@ -10,7 +10,7 @@ def predict(features):
     features_tensor = torch.tensor(features.values, dtype=torch.float64)
 
     # load the model
-    model_path = './UI/combined_feedforward_nn_essentia_best_valence_mean_normalised.pt'
+    model_path = './UI/combined_feedforward_nn_opensmile_gemaps_normalised.pt'
     model = NeuralNetwork(features_tensor.shape[1])
     model.load_state_dict(torch.load(model_path))
     model.eval()
