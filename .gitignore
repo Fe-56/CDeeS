@@ -1,3 +1,7 @@
 /data
 **/__pycache__
 /UI/uploaded_audio/*
+/sample_songs
+.DS_Store
+/VectorDB/vector/
+/VectorDB/.ipynb_checkpoints/
