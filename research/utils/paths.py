@@ -80,7 +80,7 @@ PMEMO_PROCESSED_STATIC_ANNOTATIONS_CSV = 'pmemo_static_annotations.csv'
 
 
 
-# research/notebooks/DEAM
+# research/notebooks
 SAMPLE_DEAM_AUDIO_PATH = '../../../data/DEAM/MEMD_audio/2.mp3'
 SAMPLE_DEAM_SONG_FEATURE = '../../../data/DEAM/features/2.csv'
 DEAM_AUDIO_FOLDER = '../../../data/DEAM/MEMD_audio'
@@ -93,3 +93,7 @@ PMEMO_AUDIO_FOLDER = '../../../data/PMEmo/PMEmo2019/chorus'
 PMEMO_EXTRACTED_FEATURES_FOLDER = '../../../data/PMEmo/PMEmo2019/processed/features'
 PMEMO_STATIC_ANNOTATIONS_CSV = '../../../data/PMEmo/PMEmo2019/annotations/static_annotations.csv'
 PMEMO_PROCESSED_ANNOTATIONS_FOLDER = '../../../data/PMEmo/PMEmo2019/processed/annotations'
+
+COMBINED_EXTRACTED_FEATURES_FOLDER = '../../../data/combined/features'
+COMBINED_STATIC_ANNOTATIONS_CSV = '../../../data/combined/annotations/combined_static_annotations.csv'
+COMBINED_PROCESSED_ANNOTATIONS_FOLDER = '../../../data/combined/processed/annotations'
