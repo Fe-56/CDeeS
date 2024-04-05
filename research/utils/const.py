@@ -1,0 +1,4 @@
+# openSMILE
+EXTRACTOR_OPENSMILE = 'opensmile'
+FEATURE_SET_OPENSMILE_GEMAPS = 'opensmile.FeatureSet.GeMAPS'
+FEATURE_LEVEL_OPENSMILE = 'opensmile.FeatureSet.GeMAPS'
