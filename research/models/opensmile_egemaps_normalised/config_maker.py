@@ -29,7 +29,7 @@ make_scaler(
 test = {
   "extractor": {
     "name": EXTRACTOR_OPENSMILE, 
-    "feature_set": FEATURE_SET_OPENSMILE_GEMAPS,
+    "feature_set": FEATURE_SET_OPENSMILE_EGEMAPS,
     "feature_level": FEATURE_LEVEL_OPENSMILE
   },
   "model_arch": MODEL_ARCH_PATH,
