@@ -10,7 +10,7 @@ uploaded_audio = st.file_uploader("Choose an audio file", type=['mp3', 'wav'])
 if uploaded_audio:
     st.audio(uploaded_audio, format='audio/mp3')
 
-    uploaded_audio_path = f'./UI/uploaded_audio/{uploaded_audio.name}'
+    uploaded_audio_path = f'./dashboard/UI/uploaded_audio/{uploaded_audio.name}'
 
     with open(uploaded_audio_path, "wb") as f:
         f.write(uploaded_audio.getvalue())

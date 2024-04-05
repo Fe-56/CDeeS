@@ -12,5 +12,5 @@ def extract_gemaps(song_id):
     feature_level=opensmile.FeatureLevel.Functionals,
   )
   print(f'Extracting features from song_id: {song_id}')
-  df_opensmile_temp = smile.process_file(f'{}')
+  # df_opensmile_temp = smile.process_file(f'{}')
   return df_opensmile_temp

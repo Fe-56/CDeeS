@@ -1,10 +1,12 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+import joblib
 
 def process_song(df_opensmile_features):
     # normalisation
-    scaler = get_normalisation_scaler()
+    # scaler = get_normalisation_scaler()
+    scaler = joblib.load('./research//models/opensmile_gemaps_normalised/scaler.sav')
 
     df_opensmile_gemaps_features_normalised = pd.DataFrame(scaler.transform(df_opensmile_features))
 
@@ -12,11 +14,11 @@ def process_song(df_opensmile_features):
 
 # helper functions
 
-def get_normalisation_scaler():
-    df_best_model_trained_features = pd.read_csv('./UI/opensmile_gemaps_features.csv')
+# def get_normalisation_scaler():
+#     df_best_model_trained_features = pd.read_csv('./UI/opensmile_gemaps_features.csv')
     
-    df_best_model_trained_features = df_best_model_trained_features.drop('song_id', axis=1)
-    scaler = MinMaxScaler()
-    scaler.fit(df_best_model_trained_features)
+#     df_best_model_trained_features = df_best_model_trained_features.drop('song_id', axis=1)
+#     scaler = MinMaxScaler()
+#     scaler.fit(df_best_model_trained_features)
 
-    return scaler
+#     return scaler
