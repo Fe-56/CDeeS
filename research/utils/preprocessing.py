@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+import joblib
+from const import *
 
 def map_va_value_deam(value):
   old_min = 1
@@ -164,3 +166,48 @@ def normalise_dataframe(df, song_ids):
   df_standardised = df_standardised.drop('song_id', axis=1)
   df_standardised.insert(0, column='song_id', value=song_ids)
   return df_standardised
+
+def preprocess_essentia(df_features, scaler_path, essentia_feature_set):
+  df_features_mean = get_essentia_mean_features(df_features)
+  string_columns = get_essentia_string_columns()
+
+  df_essentia_features_ndarray_columns = df_features_mean.select_dtypes(exclude=['int64', 'float64'])
+  ndarray_columns = df_essentia_features_ndarray_columns.columns.difference(string_columns)
+  df_essentia_features_ndarray_columns = df_essentia_features_ndarray_columns[ndarray_columns]
+
+  ndarray_columns = df_essentia_features_ndarray_columns.columns.to_list()
+  df_ndarray_columns = []
+
+  for column in ndarray_columns:
+      df_ndarray_column = essentia_flatten_columns(df_essentia_features_ndarray_columns, column)
+      df_ndarray_columns.append(df_ndarray_column)
+
+  df_essentia_features_ndarray_columns = pd.concat(df_ndarray_columns, axis=1)
+  
+  df_essentia_features_string_columns = df_features[string_columns]
+
+  for col in df_essentia_features_string_columns.columns:
+      df_essentia_features_string_columns[col] = df_essentia_features_string_columns[col].astype('category')
+      df_essentia_features_string_columns[col] = df_essentia_features_string_columns[col].cat.codes
+
+  df_essentia_features_numerical_columns = df_features.select_dtypes(include=['int64', 'float64'])
+
+  df_temp = pd.concat([df_essentia_features_numerical_columns, df_essentia_features_ndarray_columns], axis=1)
+  df_essentia_features_flattened = pd.concat([df_temp, df_essentia_features_string_columns], axis=1)
+
+  if (essentia_feature_set == ESSENTIA_BEST_OVERALL):
+    essentia_features = get_essentia_best_overall_features()
+  elif (essentia_feature_set == ESSENTIA_BEST_VALENCE):
+    essentia_features = get_essentia_best_valence_features()
+  elif (essentia_feature_set == ESSENTIA_BEST_AROUSAL):
+    essentia_features = get_essentia_best_arousal_features
+
+  columns = [col for col in df_essentia_features_flattened.columns if any(substring in col for substring in essentia_features)]
+  df_essentia_selected_featture = df_essentia_features_flattened[columns]
+
+  scaler = joblib.load(scaler_path)
+  return pd.DataFrame(scaler.transform(df_essentia_selected_featture))
+
+def preprocess_opensmile(df_features, scaler_path):
+  scaler = joblib.load(scaler_path)
+  return pd.DataFrame(scaler.transform(df_features))

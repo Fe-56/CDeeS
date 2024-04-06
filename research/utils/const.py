@@ -6,3 +6,6 @@ FEATURE_LEVEL_OPENSMILE = 'opensmile.FeatureLevel.Functionals'
 
 # Essentia
 EXTRACTOR_ESSENTIA = 'essentia'
+ESSENTIA_BEST_OVERALL = 'essentia best overall'
+ESSENTIA_BEST_VALENCE = 'essentia best valence'
+ESSENTIA_BEST_AROUSAL = 'essentia best arousal'

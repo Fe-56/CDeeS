@@ -8,11 +8,11 @@ from ...utils.make_scaler import *
 from ...utils.get_columns import *
 from ...utils.const import *
 
-CURRENT_PATH = f'./research/models/essentia_best_overall_opensmile_gemaps_normalised'
-FEATURE_SET_CSV = 'essentia_best_overall_opensmile_gemaps_features.csv'
+CURRENT_PATH = f'./research/models/essentia_best_arousal_normalised'
+FEATURE_SET_CSV = ESSENTIA_BEST_AROUSAL_FEATURES_CSV
 FEATURE_SET_CSV_PATH = f'{COMBINED_PATH}/features/{FEATURE_SET_CSV}'
 MODEL_ARCH_PATH = f'./research/models/feedforward_nn_combined.py'
-MODEL_WEIGHTS_PATH = f'{CURRENT_PATH}/combined_feedforward_nn_essentia_best_overall_opensmile_gemaps_normalised.pt'
+MODEL_WEIGHTS_PATH = f'{CURRENT_PATH}/combined_feedforward_nn_essentia_best_arousal_mean_normalised.pt'
 SCALER_FILE_PATH = f'{CURRENT_PATH}/scaler.sav'
 JSON_OUTPUT_PATH = f'{CURRENT_PATH}/config.json'
 
@@ -30,7 +30,8 @@ test = {
   "extractor": {
     "name": EXTRACTOR_ESSENTIA, 
     "feature_set": None,
-    "feature_level": None
+    "feature_level": None,
+    "essentia_feature_set": ESSENTIA_BEST_AROUSAL
   },
   "model_arch": MODEL_ARCH_PATH,
   "model_weights": MODEL_WEIGHTS_PATH,

@@ -2,10 +2,10 @@
 DEAM_PATH = './data/DEAM'
 PMEMO_PATH = './data/PMEmo/PMEmo2019'
 COMBINED_PATH = './data/combined'
-
+MODELS_PATH = './research/models/'
 
 # dashboard
-
+UPLOADED_AUDIO_PATH = './dashboard/UI/uploaded_audio'
 
 
 ## file names
