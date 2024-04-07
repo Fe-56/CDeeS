@@ -2,3 +2,6 @@
 **/__pycache__
 /UI/uploaded_audio/*
 /sample_songs
+/VectorDB/vector
+/research/VectorDB_test/vector
+/env
