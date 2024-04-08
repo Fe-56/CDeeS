@@ -200,7 +200,7 @@ def preprocess_essentia(df_features, scaler_path, essentia_feature_set):
   elif (essentia_feature_set == ESSENTIA_BEST_VALENCE):
     essentia_features = get_essentia_best_valence_features()
   elif (essentia_feature_set == ESSENTIA_BEST_AROUSAL):
-    essentia_features = get_essentia_best_arousal_features
+    essentia_features = get_essentia_best_arousal_features()
 
   columns = [col for col in df_essentia_features_flattened.columns if any(substring in col for substring in essentia_features)]
   df_essentia_selected_featture = df_essentia_features_flattened[columns]
