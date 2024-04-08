@@ -11,21 +11,13 @@ class NeuralNetworkCombined(nn.Module):
 
         self.layers = nn.Sequential(
             nn.Linear(input_size, self.hidden_size),
-            nn.ReLU(),
+            nn.Tanh(),
             nn.Dropout(self.p),
             nn.Linear(self.hidden_size, self.hidden_size),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.Dropout(self.p),
-            nn.Linear(self.hidden_size, self.hidden_size),
-            nn.ReLU(),
-            nn.Dropout(self.p),
-            nn.Linear(self.hidden_size, self.hidden_size),
-            nn.ReLU(),
-            nn.Dropout(self.p),
-            nn.Linear(self.hidden_size, self.hidden_size),
-            nn.ReLU(),
-            nn.Dropout(self.p),
-            nn.Linear(self.hidden_size, output_size)
+            nn.Linear(self.hidden_size, output_size),
+            nn.Tanh()
         )
 
     def forward(self, x):
