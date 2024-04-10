@@ -5,6 +5,7 @@ from prediction import predict
 import tempfile
 import os
 import math
+import matplotlib.pyplot as plt
 
 import sys
 sys.path.insert(1, './research/utils')
@@ -40,3 +41,14 @@ if st.button("Recommend me music"):
 
     st.write(f"Valence: {rounded_valence}")
     st.write(f"Arousal: {rounded_arousal}")
+
+    fig, ax = plt.subplots()
+    ax.scatter(rounded_valence, rounded_arousal, color='red')
+    ax.set_xlabel('Valence')
+    ax.set_ylabel('Arousal')
+    ax.set_title('Valence - Arousal graph')
+    ax.axvline(0, color='black', linestyle='--')
+    ax.axhline(0, color='black', linestyle='--')
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 1)
+    st.pyplot(fig)
