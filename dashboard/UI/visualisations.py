@@ -5,8 +5,8 @@ def plot_va_graph(valence, arousal, recommendations_va):
 
     for recommendation_va in recommendations_va:
       recommendations_scatter = ax.scatter(
-          [va[0] for va in recommendations_va], 
-          [va[1] for va in recommendations_va], 
+          recommendation_va[0], 
+          recommendation_va[1], 
           color='blue',
           s=3,
           marker='.'
@@ -15,7 +15,7 @@ def plot_va_graph(valence, arousal, recommendations_va):
     uploaded_song_scatter = ax.scatter(
         valence, 
         arousal, 
-        color='red',
+        color='green',
         s=3,
     )
     ax.axvline(0, color='red')
