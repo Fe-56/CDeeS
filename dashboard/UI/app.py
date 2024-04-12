@@ -2,6 +2,7 @@ import streamlit as st
 from feature_extraction import extract_features
 from preprocess import process_song
 from prediction import predict
+from visualisations import plot_va_graph
 import tempfile
 import os
 import math
@@ -10,6 +11,9 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.insert(1, './research/utils')
 from paths import *
+
+sys.path.insert(1, './dashboard/VectorDB_prod')
+from VectorDB_prod import *
 
 # write the name of the best model here!
 best_model = 'opensmile_gemaps_normalised'
@@ -31,7 +35,8 @@ def write_audio_file(uploaded_file):
 uploaded_audio = st.file_uploader("Choose an audio file", type=['mp3', 'wav'])
 uploaded_audio_path = write_audio_file(uploaded_audio)
 
-if st.button("Recommend me music"):
+if st.button("Recommend me music!"):
+    # MER phase
     features = extract_features(uploaded_audio_path, best_model)
     processed_features = process_song(features, best_model)
     valence, arousal = predict(processed_features, best_model)
@@ -41,14 +46,22 @@ if st.button("Recommend me music"):
 
     st.write(f"Valence: {rounded_valence}")
     st.write(f"Arousal: {rounded_arousal}")
+    st.pyplot(plot_va_graph(valence, arousal))
 
-    fig, ax = plt.subplots()
-    ax.scatter(rounded_valence, rounded_arousal, color='red')
-    ax.set_xlabel('Valence')
-    ax.set_ylabel('Arousal')
-    ax.set_title('Valence - Arousal graph')
-    ax.axvline(0, color='black', linestyle='--')
-    ax.axhline(0, color='black', linestyle='--')
-    ax.set_xlim(-1, 1)
-    ax.set_ylim(-1, 1)
-    st.pyplot(fig)
+    # personalised music recommendation phase
+    num_recommendations = 5
+    collection = get_chromadb_collection()
+    recommended_metadatas, recommended_audio_paths, recommended_va_values = get_recommendations(rounded_valence, rounded_arousal, num_recommendations, collection)
+
+    for i in range(num_recommendations):
+        artist = recommended_metadatas[i]['artist']
+        title = recommended_metadatas[i]['title']
+        audio_path = recommended_audio_paths[i]
+        recommended_valence = round(recommended_va_values[i][0], 4)
+        recommended_arousal = round(recommended_va_values[i][1], 4)
+        
+        st.write(f'Song {i+1}')
+        st.write(f'Artist: {artist}')
+        st.write(f'Song Title: {title}')
+        st.write(f'Valence: {recommended_valence}, Arousal: {recommended_arousal}')
+        st.audio(audio_path, format='audio/mp3')
