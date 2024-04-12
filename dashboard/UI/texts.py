@@ -29,7 +29,7 @@ def how_many_recommended(st):
 def your_music_va(st, valence, arousal):
   markdown(st,
     """<h2>
-      Your uploaded song's emotions:
+      Your uploaded audio's emotions:
     </h2>"""
   )
 
@@ -67,7 +67,7 @@ def recommended_songs(st):
 def recommended_song(st, index, title, artist, audio_path):
   markdown(st,
     f"""<h3>
-      {num_emoji(index)}
+      Song {num_emoji(index)}
     </h3>"""
   )
 
