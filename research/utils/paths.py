@@ -74,6 +74,12 @@ NORMALISED_ESSENTIA_BEST_AROUSAL_OPENSMILE_EGEMAPS_FEATURES_CSV = f'{NORMALISED}
 DEAM_PROCESSED_STATIC_ANNOTATIONS_CSV = 'deam_static_annotations.csv'
 PMEMO_PROCESSED_STATIC_ANNOTATIONS_CSV = 'pmemo_static_annotations.csv'
 
+# metadata
+DEAM_METADATA_2013 = 'data/DEAM/metadata/metadata_2013.csv'
+DEAM_METADATA_2014 = 'data/DEAM/metadata/metadata_2014.csv'
+
+PMEMO_METADATA = 'data/PMEmo/PMEmo2019/metadata.csv'
+
 # model weights
 
 
