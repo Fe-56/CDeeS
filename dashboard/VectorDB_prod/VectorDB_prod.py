@@ -1,7 +1,7 @@
 import chromadb
 
 def get_chromadb_collection():
-  client = chromadb.PersistentClient(path='./research/VectorDB_test/')
+  client = chromadb.PersistentClient(path='./research/VectorDB_test/db')
   collection = client.get_collection(name="DEAM_PMEmo_dataset")
   return collection
 
