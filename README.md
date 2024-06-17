@@ -3,6 +3,9 @@
 ## Description
 As part of the 2024 SUTD Computational Data Science Module, we decided to explore Music Emotion Recognition and Retrieval to better understand how audio processing works and how we could develop models that can recommend songs that are emotionally similar.
 
+## Report
+Please click on [this link]([url](https://drive.google.com/file/d/1Cnvv_JJUoqeenurADwdNmOGSbnoU2EFq/view?usp=sharing)) to view our report that documents our end-to-end process in this project.
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
